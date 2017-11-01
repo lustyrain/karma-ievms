@@ -4,7 +4,6 @@
   "description": "Karma launcher for ievms virtual machines",
   "main": "index.js",
   "scripts": {
-    "test": "coffeelint -r src"
   },
   "repository": {
     "type": "git",
