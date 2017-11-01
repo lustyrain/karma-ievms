@@ -25,10 +25,12 @@ function IEVMLauncher ( id, vmName, logger, baseBrowserDecorator ) {
 		return this.vm.running().then(function ( running ) {
 			self.wasRunning = running;
 			if (running) {
+				log.info('Running VM');
 				log.info('Opening VM ' + self.name);
 				return self.vm.open(vmUrl);
 			}
 			return self.vm.start(true).then(function () {
+				log.info('Init VM');
 				log.info('Opening VM ' + self.name);
 				return self.vm.open(vmUrl);
 			});

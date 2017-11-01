@@ -4,8 +4,7 @@
   "description": "Karma launcher for ievms virtual machines",
   "main": "index.js",
   "scripts": {
-    "test": "coffeelint -r src",
-    "prepublish": "coffee -cbo lib src"
+    "test": "coffeelint -r src"
   },
   "repository": {
     "type": "git",
@@ -28,11 +27,11 @@
   },
   "devDependencies": {
     "coffee-script": "~1.6.3",
-    "groc": "~0.4.0",
-    "coffeelint": "~0.5.6"
+    "coffeelint": "~0.5.6",
+    "groc": "~0.4.0"
   },
   "dependencies": {
-    "iectrl": "~0.1.0"
+    "iectrl": "git+https://github.com/lustyrain/iectrl.git#master"
   },
   "peerDependencies": {
     "karma": ">=0.9"
