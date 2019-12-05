@@ -3,9 +3,7 @@
   "version": "0.1.1",
   "description": "Karma launcher for ievms virtual machines",
   "main": "index.js",
-  "scripts": {
-    "test": "coffeelint -r src"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/xdissent/karma-ievms.git"
@@ -26,8 +24,6 @@
     "url": "https://github.com/xdissent/karma-ievms/issues"
   },
   "devDependencies": {
-    "coffee-script": "~1.6.3",
-    "coffeelint": "~0.5.6",
     "groc": "~0.4.0"
   },
   "dependencies": {
