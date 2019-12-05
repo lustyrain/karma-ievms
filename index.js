@@ -2,11 +2,11 @@ var iectrl = require('iectrl');
 var vmNames = iectrl.IEVM.names;
 var finalExports = {};
 
-vmNames.forEach(function ( vmName ) {
+vmNames.forEach(function (vmName) {
 	finalExports['launcher:' + vmName] = ['type', IEVMLauncher];
 });
 
-function IEVMLauncher ( id, vmName, logger, baseBrowserDecorator ) {
+function IEVMLauncher(id, vmName, logger, baseBrowserDecorator) {
 
 	var log = logger.create('launcher.ievms');
 
@@ -18,47 +18,40 @@ function IEVMLauncher ( id, vmName, logger, baseBrowserDecorator ) {
 	this.wasRunning = false;
 	this.captured = false;
 
-	this.start = function ( url ) {
+	var wasRunning = this.wasRunning;
+	var name = this.name;
+	var vm = this.vm;
+
+	this.start = function (url) {
 		var vmUrl;
 		var self = this;
 		vmUrl = (String(url) + '?id=' + this.id).replace('localhost', iectrl.IEVM.hostIp);
-		return this.vm.running().then(function ( running ) {
+		return this.vm.running().then(function (running) {
 			self.wasRunning = running;
 			if (running) {
-				log.info('Running VM');
 				log.info('Opening VM ' + self.name);
 				return self.vm.open(vmUrl);
 			}
 			return self.vm.start(true).then(function () {
-				log.info('Init VM');
 				log.info('Opening VM ' + self.name);
 				return self.vm.open(vmUrl);
 			});
 		});
 	};
 
-	this.kill = function ( done ) {
-		var self = this;
+
+	this.on('kill', function (done) {
 		log.info('Closing VM');
-		return this.vm.close().then(function () {
-			if ( self.wasRunning ) {
+		return vm.close().then(function () {
+			if (wasRunning) {
 				return done();
 			}
-			log.info('Stopping VM ' + self.name);
-			return self.vm.stop().then(function () {
+			log.info('Stopping VM ' + name);
+			return vm.stop().then(function () {
 				return done();
 			});
 		}).catch(done);
-	};
-
-	this.forceKill = function () {
-		var self = this;
-		log.info('Force stopping VM ' + self.name);
-		return self.kill(function () {
-			self.emit('done');
-		});
-	};
-
+	});
 	this.markCaptured = function () {
 		this.captured = true;
 	};
